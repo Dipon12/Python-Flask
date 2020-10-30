@@ -144,6 +144,8 @@ Generates a URL to the given endpoint with the method provided.
 flask.session is like a dictionary. Whatever key-value pair is used in session dictionary is saved in cookies and 
 so anyone can read it. Hence _app.config['SECRET_KEY] = True_ is required so that even though they can read it, they cannot modify it.
 
+**flask.session**
 
+Always keep _app.config['DEBUG']=True_ for debug purpose and when app goes live turn it off.
 
 ---

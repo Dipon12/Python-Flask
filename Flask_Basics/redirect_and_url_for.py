@@ -14,6 +14,12 @@ app = Flask(__name__) #Flask instance
 app.config['DEBUG'] = True #instead of wrinting app.run(debug=True) you can use this dictionary
 app.config['SECRET_KEY'] = "1234567" 
 
+
+@app.route('/')
+def index():
+    session.pop('name',None)
+    return "Hello World"
+
 @app.route('/home',methods=["GET","POST"],defaults={"name" : "Default_name"})
 @app.route('/home/<name>',methods=["GET","POST"])
 def home(name):
@@ -41,7 +47,11 @@ def theform():
 
 @app.route('/json',methods=['POST','GET'])
 def json():
-    name = session['name']
+
+    if 'name' in session:
+        name = session['name']
+    else:
+        name = "NameNotAvailable"
 
     return jsonify({'key': 'value',
                     'name' : name})

@@ -1,2 +1,5 @@
+#vscode settings
 .vscode
-flask_env
+
+#environment folder
+flask_env/

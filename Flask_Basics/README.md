@@ -1,5 +1,4 @@
----
-## Activating Virtual Environment (For Ubunt-20.04 LTS)
+## Activating Virtual Environment (For Ubuntu-20.04 LTS)
 
 **It is important to do, so that whatever package you install for this project doesn't affect others**
 
@@ -31,6 +30,8 @@
 
 ---
 
+## Required Info for simple_app.py 
+
 ### Decorator (@)
 
 `@app.route('/')` 
@@ -59,7 +60,7 @@ here "name" is a placeholder. You can use this in the function as a variable. We
 
 ---
 
-### Request
+## Required Info for request_app.py 
 
 **Request Query String**`
 
@@ -98,5 +99,51 @@ def process():
 
 request comes to the '/theform'. When the form is filled up and submitted as action="/process" the url will change to the "/process" and execute that route logic. 
 request.form['name'] is the way data is received from form.
+
+**Request JSON Data**
+
+```
+@app.route('/processjson',methods=['POST'])
+def jsonprocess():
+
+    data = request.get_json() 
+    
+    name = data['name']
+    loc = data['location']
+    random_list = data['randomlist']
+
+
+    return jsonify({'Result':'Success', 
+                    'Name' : name, 
+                '    location' : loc,
+                     'A_List' : random_list[1] })
+
+
+```
+
+converts JSON data to python dictionary and processes it.
+
+
+
+---
+
+
+## Required Info for Redirection
+
+**redirect()**
+
+Redirects user from one page to another
+
+**url_for()** :
+
+Generates a URL to the given endpoint with the method provided.
+
+
+**flask.session**
+
+flask.session is like a dictionary. Whatever key-value pair is used in session dictionary is saved in cookies and 
+so anyone can read it. Hence _app.config['SECRET_KEY] = True_ is required so that even though they can read it, they cannot modify it.
+
+
 
 ---

@@ -8,7 +8,8 @@ so anyone can read it. Hence app.config['SECRET_KEY] = True is required so that 
 """
 
 
-from flask import Flask, jsonify, request,redirect, url_for, session
+from flask import Flask, jsonify, request,redirect, url_for, session, render_template
+
 
 app = Flask(__name__) #Flask instance
 app.config['DEBUG'] = True #instead of wrinting app.run(debug=True) you can use this dictionary
@@ -24,20 +25,14 @@ def index():
 @app.route('/home/<name>',methods=["GET","POST"])
 def home(name):
     session['name'] = name # Now it can be used and called from any function
-    return f"<h1>Hi {name}. You are in the home page</h1>"
+    return render_template('home_page.html',html_name = name)
 
 
 @app.route('/theform',methods = ['GET','POST'],)
 def theform():
     if request.method == "GET":    
 
-        return '''
-        <form method="POST" action="/theform">    
-        <input type ="text" name="name">
-        <input type ="text" name ="location">
-        <input type ="submit" value = "Submit">
-        </form>
-        '''
+        return render_template('form_page.html')
     else:
         name = request.form['name']
         location = request.form['location']
@@ -53,13 +48,8 @@ def json():
     else:
         name = "NameNotAvailable"
 
-    return jsonify({'key': 'value',
+    return jsonify({'key': 'value', 
                     'name' : name})
-
-    
-
-
-    return jsonify({'Result':'Success', 'Name' : name, 'location' : loc, 'A_List' : random_list[1] })
 
 if __name__=="__main__":
     app.run()

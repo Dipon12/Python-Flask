@@ -19,20 +19,9 @@ here name is a placeholder. You can use this in the function as a variable
 we can specify the type of the placeholder like this:-
 @app.route('/api/<string: name>')
 
-Request Query String:-
-
-@app.route('/query')
-def query():
-    n = request.args.get('name')
-    l = request.args.get('location')
-
-    return f"Your name is {n} and your location is {l}"
-
-add query?name=Something&location=place_name to get the output
-
 """
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 
 app = Flask(__name__) #Flask instance
 

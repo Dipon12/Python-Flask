@@ -23,4 +23,4 @@ But you won't want two separate name for the same variable in two places so you 
 
 and inside html page-
 
-`<h1>Hello {{name }} ! You are in the Home Page!!! </h1>`
+`<h1>Hello {{ name }} ! You are in the Home Page!!! </h1>`

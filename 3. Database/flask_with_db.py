@@ -1,19 +1,34 @@
 """
-Redirect:- Redirects user from one page to another
-url_for:- Generates a URL to the given endpoint with the method provided.
-
-flask.session:- flask.session is like a dictionary. Whatever key-value pair is used in session dictionary is saved in cookies and 
-so anyone can read it. Hence app.config['SECRET_KEY] = True is required so that even though they can read it, they cannot modify it.
 
 """
 
 
-from flask import Flask, jsonify, request,redirect, url_for, session, render_template
-
+from flask import Flask, jsonify, request,redirect, url_for, session, render_template,g
+import sqlite3
 
 app = Flask(__name__) #Flask instance
 app.config['DEBUG'] = True #instead of wrinting app.run(debug=True) you can use this dictionary
 app.config['SECRET_KEY'] = "1234567" 
+
+def connect_db():
+    """
+        Connects Flask App with Database
+    """
+
+    sql = sqlite3.connect('/mnt/c/Users/dipon/Documents/Python Flask/data.db')
+    sql.row_factory = sqlite3.Row #converts row tuples into row dictionary
+    
+    return sql
+
+def get_db():
+    if not hasattr(g, 'sqlite3'):
+        g.sqlite_db = connect_db() # g is a global object
+    return g.sqlite_db
+
+@app.teardown_appcontext #automatically called when route returns
+def close_db(error ):
+    if hasattr(g,'sqlite_db'):
+        g.sqlite_db.close(  )
 
 
 @app.route('/')

@@ -25,14 +25,17 @@ def index():
 @app.route('/home/<name>',methods=["GET","POST"])
 def home(name):
     session['name'] = name # Now it can be used and called from any function
-    return render_template('home_page.html',html_name = name)
+    return render_template('home_page.html',html_name = name, display = True,
+                            mylist = ['one','two','three'],
+                            my_dict = [{'name' : 'Dipon'}, {'name' : 'Srijon'}])
 
 
 @app.route('/theform',methods = ['GET','POST'],)
 def theform():
     if request.method == "GET":    
 
-        return render_template('form_page.html')
+        #return render_template('form_page.html')
+        return render_template('form_page_2.html')
     else:
         name = request.form['name']
         location = request.form['location']

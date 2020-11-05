@@ -22,4 +22,6 @@ Basic Format: _create table tablename (column1_name datatype, column2_name datat
 
 `.tables`
 
-mnt/c/Users/dipon/Documents/Python Flask
+**Exiting from sqlite**
+
+`.quit`

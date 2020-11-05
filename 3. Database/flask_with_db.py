@@ -1,8 +1,3 @@
-"""
-
-"""
-
-
 from flask import Flask, jsonify, request,redirect, url_for, session, render_template,g
 import sqlite3
 
@@ -15,21 +10,27 @@ def connect_db():
         Connects Flask App with Database
     """
 
-    sql = sqlite3.connect('/mnt/c/Users/dipon/Documents/Python Flask/data.db')
+    #sql = sqlite3.connect('/mnt/c/Users/dipon/Documents/Python Flask/data.db')
+    sql = sqlite3.connect('data.db')
     sql.row_factory = sqlite3.Row #converts row tuples into row dictionary
     
     return sql
 
 def get_db():
+    """
+        Gets data from database
+    """
     if not hasattr(g, 'sqlite3'):
         g.sqlite_db = connect_db() # g is a global object
     return g.sqlite_db
 
 @app.teardown_appcontext #automatically called when route returns
 def close_db(error ):
+    """
+        Close Connection with Database
+    """
     if hasattr(g,'sqlite_db'):
         g.sqlite_db.close(  )
-
 
 @app.route('/')
 def index():
@@ -39,10 +40,17 @@ def index():
 @app.route('/home',methods=["GET","POST"],defaults={"name" : "Default_name"})
 @app.route('/home/<name>',methods=["GET","POST"])
 def home(name):
-    session['name'] = name # Now it can be used and called from any function
+    session['name'] = name # Now it can be used and called from any function (Cached)
+    db = get_db()
+    cur = db.execute('select id, name, location from users')
+    result = cur.fetchall()
+    #print(type(result))
+    print(result[0])
+
+
     return render_template('home_page.html',html_name = name, display = True,
                             mylist = ['one','two','three'],
-                            my_dict = [{'name' : 'Dipon'}, {'name' : 'Srijon'}])
+                            my_dict = [{'name' : 'Dipon'}, {'name' : 'Srijon'}] , results = result)
 
 
 @app.route('/theform',methods = ['GET','POST'],)
